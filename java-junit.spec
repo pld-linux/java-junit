@@ -5,8 +5,6 @@ Version:	3.7
 Release:	1
 License:	IBM Public License
 Group:		Development/Languages/Java
-Group(de):	Entwicklung/Sprachen/Java
-Group(pl):	Programowanie/Jêzyki/Java
 Source0:	%{name}%{version}.zip
 URL:		http://www.junit.org/
 BuildArch:	noarch
@@ -24,8 +22,6 @@ JUnit - ¶rodowisko do testów regresji.
 Summary:	JUnit documentation
 Summary(pl):	Dokumentacja do JUnit
 Group:		Development/Languages/Java
-Group(de):	Entwicklung/Sprachen/Java
-Group(pl):	Programowanie/Jêzyki/Java
 
 %description doc
 JUnit documentation.
