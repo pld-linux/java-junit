@@ -8,6 +8,7 @@ Group:		Development/Languages/Java
 Source0:	http://dl.sourceforge.net/junit/%{name}%{version}.zip
 # Source0-md5:	5110326e4b7f7497dfa60ede4b626751
 URL:		http://www.junit.org/
+BuildRequires:	unzip
 Requires:	jdk >= 1.1
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
