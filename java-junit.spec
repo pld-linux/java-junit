@@ -1,4 +1,4 @@
-Summary: 	JUnit - regression testing framework
+Summary:	JUnit - regression testing framework
 Summary(pl):	JUnit - ¶rodowisko do testów regresji
 Name:		junit
 Version:	3.7
