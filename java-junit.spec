@@ -36,7 +36,8 @@ Dokumentacja do JUnit.
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_javalibdir}
-install junit.jar $RPM_BUILD_ROOT%{_javalibdir}
+install junit.jar $RPM_BUILD_ROOT%{_javalibdir}/junit-%{version}.jar
+ln -sf junit-%{version}.jar $RPM_BUILD_ROOT%{_javalibdir}/junit.jar
 
 %clean
 rm -rf $RPM_BUILD_ROOT
