@@ -6,6 +6,7 @@ Release:	1
 License:	IBM Common Public License v1.0
 Group:		Development/Languages/Java
 Source0:	http://download.sourceforge.net/junit/%{name}%{version}.zip
+# Source0-md5:	5110326e4b7f7497dfa60ede4b626751
 URL:		http://www.junit.org/
 Requires:	jdk >= 1.1
 BuildArch:	noarch
