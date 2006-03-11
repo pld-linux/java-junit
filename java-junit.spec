@@ -1,12 +1,12 @@
 Summary:	JUnit - regression testing framework
 Summary(pl):	JUnit - ¶rodowisko do testów regresji
 Name:		junit
-Version:	3.8.1
+Version:	3.8.2
 Release:	1
 License:	IBM Common Public License v1.0
 Group:		Development/Languages/Java
 Source0:	http://dl.sourceforge.net/junit/%{name}%{version}.zip
-# Source0-md5:	5110326e4b7f7497dfa60ede4b626751
+# Source0-md5:	9b8963ba2147a64bd5f1574b6fd289cb
 URL:		http://www.junit.org/
 BuildRequires:	unzip
 Requires:	jdk >= 1.1
