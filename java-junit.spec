@@ -1,54 +1,92 @@
-Summary:	JUnit - regression testing framework
-Summary(pl):	JUnit - ¶rodowisko do testów regresji
+Summary:	Java regression test package
 Name:		junit
-Version:	3.8.2
-Release:	1
-License:	IBM Common Public License v1.0
-Group:		Development/Languages/Java
-Source0:	http://dl.sourceforge.net/junit/%{name}%{version}.zip
-# Source0-md5:	9b8963ba2147a64bd5f1574b6fd289cb
+Version:	3.8.1
+Release:	0.1
+License:	IBM Public License
+Group:		Development
 URL:		http://www.junit.org/
-BuildRequires:	unzip
-Requires:	jdk >= 1.1
-BuildArch:	noarch
-BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
-
-%define		_javalibdir	%{_datadir}/java
+Source0:	http://dl.sourceforge.net/junit/%{name}%{version}.zip
+# Source0-md5:	5110326e4b7f7497dfa60ede4b626751
+BuildRequires:	jakarta-ant
+Buildarch:	noarch
+Buildroot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
-JUnit - regression testing framework.
+JUnit is a regression testing framework written by Erich Gamma and
+Kent Beck. It is used by the developer who implements unit tests in
+Java. JUnit is Open Source Software, released under the IBM Public
+License and hosted on SourceForge.
 
-%description -l pl
-JUnit - ¶rodowisko do testów regresji.
+%package manual
+Summary:	Manual for %{name}
+Group:		Development
 
-%package doc
-Summary:	JUnit documentation
-Summary(pl):	Dokumentacja do JUnit
-Group:		Development/Languages/Java
+%description manual
+Documentation for %{name}.
 
-%description doc
-JUnit documentation.
+%package javadoc
+Summary:	Javadoc for %{name}
+Group:		Documentation
 
-%description doc -l pl
-Dokumentacja do JUnit.
+%description javadoc
+Javadoc for %{name}.
+
+%package demo
+Summary:	Demos for %{name}
+Group:		Development
+Requires:	%{name} = %{version}-%{release}
+
+%description demo
+Demonstrations and samples for %{name}.
 
 %prep
+
 %setup -q -n %{name}%{version}
+# extract sources
+jar xvf src.jar
+
+%build
+ant dist
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_javalibdir}
-install junit.jar $RPM_BUILD_ROOT%{_javalibdir}/junit-%{version}.jar
-ln -sf junit-%{version}.jar $RPM_BUILD_ROOT%{_javalibdir}/junit.jar
+# jars
+install -d $RPM_BUILD_ROOT%{_javadir}
+install %{name}%{version}/%{name}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-%{version}.jar
+(cd $RPM_BUILD_ROOT%{_javadir} && for jar in *-%{version}*; do ln -sf ${jar} ${jar/-%{version}/}; done)
+# javadoc
+install -d $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
+cp -pr %{name}%{version}/javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
+# demo
+install -d $RPM_BUILD_ROOT%{_datadir}/%{name}
+cp -pr %{name}%{version}/%{name}/* $RPM_BUILD_ROOT%{_datadir}/%{name}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
+%post javadoc
+rm -f %{_javadocdir}/%{name}
+ln -s %{name}-%{version} %{_javadocdir}/%{name}
+
+%postun javadoc
+if [ "$1" = "0" ]; then
+    rm -f %{_javadocdir}/%{name}
+fi
+
 %files
 %defattr(644,root,root,755)
-%doc README.html cpl-v10.html
-%{_javalibdir}/*.jar
+%doc README.html
+%{_javadir}/*
+%dir %{_datadir}/%{name}
 
-%files doc
+%files manual
 %defattr(644,root,root,755)
-%doc doc javadoc junit
+%doc %{name}%{version}/doc/*
+
+%files javadoc
+%defattr(644,root,root,755)
+%{_javadocdir}/%{name}-%{version}
+
+%files demo
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/*
