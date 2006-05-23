@@ -21,22 +21,25 @@ JUnit - ¶rodowisko do testów regresji.
 
 %package doc
 Summary:	JUnit documentation
-Summary(pl):	Dokumentacja do JUnit
+Summary(pl):	Dokumentacja do pakietu JUnit
 Group:		Development/Languages/Java
 
 %description doc
 JUnit documentation.
 
 %description doc -l pl
-Dokumentacja do JUnit.
+Dokumentacja do pakietu JUnit.
 
 %package javadoc
 Summary:	Javadoc documentation for JUnit
-Summary(pl):	Dokumentacja javadoc dla JUnit
+Summary(pl):	Dokumentacja javadoc dla pakietu JUnit
 Group:		Development/Languages/Java
 
 %description javadoc
 JUnit API documentation.
+
+%description javadoc -l pl
+Dokumentacja javadoc dla pakietu JUnit.
 
 %prep
 %setup -q -n %{name}%{version}
