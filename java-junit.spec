@@ -1,5 +1,5 @@
 Summary:	JUnit - regression testing framework
-Summary(pl.UTF-8):   JUnit - środowisko do testów regresji
+Summary(pl.UTF-8):	JUnit - środowisko do testów regresji
 Name:		junit
 Version:	4.1
 Release:	2
@@ -21,7 +21,7 @@ JUnit - środowisko do testów regresji.
 
 %package doc
 Summary:	JUnit documentation
-Summary(pl.UTF-8):   Dokumentacja do pakietu JUnit
+Summary(pl.UTF-8):	Dokumentacja do pakietu JUnit
 Group:		Development/Languages/Java
 
 %description doc
@@ -32,7 +32,7 @@ Dokumentacja do pakietu JUnit.
 
 %package javadoc
 Summary:	Javadoc documentation for JUnit
-Summary(pl.UTF-8):   Dokumentacja javadoc dla pakietu JUnit
+Summary(pl.UTF-8):	Dokumentacja javadoc dla pakietu JUnit
 Group:		Development/Languages/Java
 Requires:	jpackage-utils
 
