@@ -1,15 +1,16 @@
+%include	/usr/lib/rpm/macros.java
 Summary:	JUnit - regression testing framework
 Summary(pl.UTF-8):	JUnit - środowisko do testów regresji
 Name:		junit
-Version:	4.1
-Release:	2
+Version:	4.3.1
+Release:	1
 License:	IBM Common Public License v1.0
 Group:		Development/Languages/Java
-Source0:	http://dl.sourceforge.net/junit/%{name}%{version}.zip
-# Source0-md5:	e66d3e77c70b3297f2c6a12990fc3120
+Source0:	http://dl.sourceforge.net/junit/%{name}-%{version}-src.jar
+# Source0-md5:	170f9645a41398388e8553b32ff5f630
 URL:		http://www.junit.org/
 BuildRequires:	unzip
-Requires:	jdk >= 1.1
+Requires:	jdk >= 1.5
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -19,22 +20,12 @@ JUnit - regression testing framework.
 %description -l pl.UTF-8
 JUnit - środowisko do testów regresji.
 
-%package doc
-Summary:	JUnit documentation
-Summary(pl.UTF-8):	Dokumentacja do pakietu JUnit
-Group:		Development/Languages/Java
-
-%description doc
-JUnit documentation.
-
-%description doc -l pl.UTF-8
-Dokumentacja do pakietu JUnit.
-
 %package javadoc
 Summary:	Javadoc documentation for JUnit
 Summary(pl.UTF-8):	Dokumentacja javadoc dla pakietu JUnit
 Group:		Development/Languages/Java
 Requires:	jpackage-utils
+Obsoletes:	junit-doc
 
 %description javadoc
 JUnit API documentation.
@@ -43,7 +34,14 @@ JUnit API documentation.
 Dokumentacja javadoc dla pakietu JUnit.
 
 %prep
-%setup -q -n %{name}%{version}
+%setup -qc
+install -d javadoc
+rm -f junit/runner/Version.java.template
+
+%build
+%javac $(find -name '*.java')
+%jar -cvf %{name}-%{version}.jar $(find -type f '!' -name '*.java')
+%javadoc -d javadoc $(find -name '*.java')
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -60,12 +58,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc README.html cpl-v10.html
 %{_javadir}/*.jar
-
-%files doc
-%defattr(644,root,root,755)
-%doc doc/* junit/*
 
 %files javadoc
 %defattr(644,root,root,755)
