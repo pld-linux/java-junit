@@ -9,6 +9,7 @@ Group:		Development/Languages/Java
 Source0:	http://dl.sourceforge.net/junit/%{name}-%{version}-src.jar
 # Source0-md5:	170f9645a41398388e8553b32ff5f630
 URL:		http://www.junit.org/
+BuildRequires:	rpm-javaprov
 BuildRequires:	unzip
 Requires:	jdk >= 1.5
 BuildArch:	noarch
