@@ -2,15 +2,19 @@
 Summary:	JUnit - regression testing framework
 Summary(pl.UTF-8):	JUnit - środowisko do testów regresji
 Name:		junit
-Version:	4.3.1
+Version:	4.4
 Release:	1
 License:	IBM Common Public License v1.0
 Group:		Development/Languages/Java
 Source0:	http://dl.sourceforge.net/junit/%{name}-%{version}-src.jar
-# Source0-md5:	170f9645a41398388e8553b32ff5f630
+# Source0-md5:	4126a0974473f7cb7df7fd5cd109505d
 URL:		http://www.junit.org/
+BuildRequires:	hamcrest
+BuildRequires:	jdk >= 1.5
+BuildRequires:	jpackage-utils
 BuildRequires:	rpm-javaprov
 BuildRequires:	unzip
+Requires:	hamcrest
 Requires:	jdk >= 1.5
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -40,6 +44,8 @@ install -d javadoc
 rm -f junit/runner/Version.java.template
 
 %build
+export CLASSPATH=$(build-classpath hamcrest-core)
+
 %javac $(find -name '*.java')
 %jar -cvf %{name}-%{version}.jar $(find -type f '!' -name '*.java')
 %javadoc -d javadoc $(find -name '*.java')
