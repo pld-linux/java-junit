@@ -13,6 +13,7 @@ BuildRequires:	hamcrest
 BuildRequires:	jdk >= 1.5
 BuildRequires:	jpackage-utils
 BuildRequires:	rpm-javaprov
+BuildRequires:	rpmbuild(macros) >= 1.300
 BuildRequires:	unzip
 Requires:	hamcrest
 Requires:	jdk >= 1.5
@@ -28,7 +29,7 @@ JUnit - środowisko do testów regresji.
 %package javadoc
 Summary:	Javadoc documentation for JUnit
 Summary(pl.UTF-8):	Dokumentacja javadoc dla pakietu JUnit
-Group:		Development/Languages/Java
+Group:		Documentation
 Requires:	jpackage-utils
 Obsoletes:	junit-doc
 
