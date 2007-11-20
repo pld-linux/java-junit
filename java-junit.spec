@@ -9,6 +9,8 @@ Group:		Development/Languages/Java
 Source0:	http://dl.sourceforge.net/junit/%{name}%{version}.zip
 # Source0-md5:	9b8963ba2147a64bd5f1574b6fd289cb
 URL:		http://www.junit.org/
+BuildRequires:	rpm-javaprov
+BuildRequires:	rpmbuild(macros) >= 1.300
 BuildRequires:	unzip
 Requires:	jdk >= 1.1
 BuildArch:	noarch
@@ -34,7 +36,8 @@ Dokumentacja do JUnit.
 %package javadoc
 Summary:	Javadoc documentation for JUnit
 Summary(pl):	Dokumentacja javadoc dla JUnit
-Group:		Development/Languages/Java
+Group:		Documentation
+Requires:	jpackage-utils
 
 %description javadoc
 JUnit API documentation.
