@@ -1,9 +1,11 @@
+%define		_java_source	1.4
+%define		_java_target	1.4
 %include	/usr/lib/rpm/macros.java
 Summary:	JUnit - regression testing framework
 Summary(pl.UTF-8):	JUnit - środowisko do testów regresji
 Name:		junit
 Version:	3.8.2
-Release:	1
+Release:	2
 License:	IBM Common Public License v1.0
 Group:		Development/Languages/Java
 Source0:	http://dl.sourceforge.net/junit/%{name}%{version}.zip
@@ -49,7 +51,7 @@ unzip -q src.jar -d build
 
 %build
 cd build
-%javac $(find -name '*.java')
+%javac -target %{_java_target} -source %{_java_source} $(find -name '*.java')
 %jar -cvf %{name}-%{version}.jar $(find -type f '!' -name '*.java')
 
 %install
