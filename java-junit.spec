@@ -1,6 +1,6 @@
 %include	/usr/lib/rpm/macros.java
 Summary:	JUnit - regression testing framework
-Summary(pl):	JUnit - ¶rodowisko do testów regresji
+Summary(pl.UTF-8):	JUnit - Å›rodowisko do testÃ³w regresji
 Name:		junit
 Version:	3.8.2
 Release:	1
@@ -19,23 +19,23 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %description
 JUnit - regression testing framework.
 
-%description -l pl
-JUnit - ¶rodowisko do testów regresji.
+%description -l pl.UTF-8
+JUnit - Å›rodowisko do testÃ³w regresji.
 
 %package doc
 Summary:	JUnit documentation
-Summary(pl):	Dokumentacja do JUnit
+Summary(pl.UTF-8):	Dokumentacja do JUnit
 Group:		Development/Languages/Java
 
 %description doc
 JUnit documentation.
 
-%description doc -l pl
+%description doc -l pl.UTF-8
 Dokumentacja do JUnit.
 
 %package javadoc
 Summary:	Javadoc documentation for JUnit
-Summary(pl):	Dokumentacja javadoc dla JUnit
+Summary(pl.UTF-8):	Dokumentacja javadoc dla JUnit
 Group:		Documentation
 Requires:	jpackage-utils
 
