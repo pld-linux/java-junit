@@ -5,7 +5,7 @@ Name:		junit
 Version:	4.4
 Release:	1
 License:	IBM Common Public License v1.0
-Group:		Development/Languages/Java
+Group:		Libraries/Java
 Source0:	http://dl.sourceforge.net/junit/%{name}-%{version}-src.jar
 # Source0-md5:	4126a0974473f7cb7df7fd5cd109505d
 URL:		http://www.junit.org/
