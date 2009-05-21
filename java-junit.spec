@@ -9,11 +9,17 @@
 #
 # Conditional build:
 %bcond_without  javadoc         # don't build javadoc
+%bcond_with 	binary		# do not compile .jars from source use bundled ones
 
 %if "%{pld_release}" == "ti"
 %bcond_without java_sun        # build with gcj
 %else
-%bcond_with    java_sun        # build with java-sun
+%bcond_without   java_sun        # build with java-sun
+%endif
+
+# HACK: use binary where java-sun not available
+%ifnarch i586 i686 pentium3 pentium4 athlon %{x8664}
+%define	with_binary	1
 %endif
 
 %define		srcname		junit
@@ -22,15 +28,19 @@ Summary:	JUnit - regression testing framework
 Summary(pl.UTF-8):	JUnit - środowisko do testów regresji
 Name:		java-junit
 Version:	4.4
-Release:	2
+Release:	3
 License:	IBM Common Public License v1.0
 Group:		Libraries/Java
 Source0:	http://dl.sourceforge.net/junit/%{srcname}-%{version}-src.jar
 # Source0-md5:	4126a0974473f7cb7df7fd5cd109505d
+Source1:	http://carme.pld-linux.org/~glen/junit-%{version}.jar
+# Source1-md5:	823d46f50018f26fd4d4d7ee47fd4a6e
 URL:		http://www.junit.org/
+%if %{without binary}
 %{!?with_java_sun:BuildRequires:        java-gcj-compat-devel}
-BuildRequires:	java-hamcrest
 %{?with_java_sun:BuildRequires:	java-sun >= 1.5}
+%endif
+BuildRequires:	java-hamcrest
 BuildRequires:	jpackage-utils
 BuildRequires:	rpm-javaprov
 BuildRequires:	rpmbuild(macros) >= 1.300
@@ -65,14 +75,20 @@ Dokumentacja javadoc dla pakietu JUnit.
 %setup -qc
 install -d javadoc
 rm -f junit/runner/Version.java.template
+%if %{with binary}
+cp %{SOURCE1} .
+%endif
 
 %build
+%if %{without binary}
 required_jars="hamcrest-core"
 CLASSPATH=$(build-classpath $required_jars)
 export CLASSPATH
 
 %javac -target 1.5 -source 1.5 $(find -name '*.java')
 %jar -cvf %{srcname}-%{version}.jar $(find -type f '!' -name '*.java')
+%endif
+
 %{?with_javadoc:%javadoc -d javadoc $(find -name '*.java')}
 
 %install
