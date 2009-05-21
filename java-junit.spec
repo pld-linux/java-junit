@@ -3,6 +3,9 @@
 # Syntax error, annotations are only available if source level is 5.0
 # Syntax error, static imports are only available if source level is 5.0
 # Syntax error, parameterized types are only available if source level is 5.0
+# Syntax error, varargs are only available if source level is 5.0
+# Syntax error, annotation declarations are only available if source level is 5.0
+# Syntax error, type parameters are only available if source level is 5.0
 #
 # Conditional build:
 %bcond_without  javadoc         # don't build javadoc
