@@ -67,9 +67,11 @@ install -d javadoc
 rm -f junit/runner/Version.java.template
 
 %build
-export CLASSPATH=$(build-classpath hamcrest-core)
+required_jars="hamcrest-core"
+CLASSPATH=$(build-classpath $required_jars)
+export CLASSPATH
 
-%javac $(find -name '*.java')
+%javac -target 1.5 -source 1.5 $(find -name '*.java')
 %jar -cvf %{srcname}-%{version}.jar $(find -type f '!' -name '*.java')
 %{?with_javadoc:%javadoc -d javadoc $(find -name '*.java')}
 
@@ -80,7 +82,7 @@ install junit-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/junit-%{version}.jar
 ln -sf junit-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/junit.jar
 
 # javadoc
-%if %{with_javadoc}
+%if %{with javadoc}
 install -d $RPM_BUILD_ROOT%{_javadocdir}/%{srcname}-%{version}
 cp -pr javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{srcname}-%{version}
 ln -s %{srcname}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{srcname} # ghost symlink
@@ -96,8 +98,9 @@ ln -nfs %{srcname}-%{version} %{_javadocdir}/%{srcname}
 %defattr(644,root,root,755)
 %{_javadir}/*.jar
 
-%if %{with_javadoc}
+%if %{with javadoc}
 %files javadoc
 %defattr(644,root,root,755)
 %{_javadocdir}/%{srcname}-%{version}
+%ghost %{_javadocdir}/%{srcname}
 %endif
