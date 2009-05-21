@@ -1,3 +1,10 @@
+# TODO
+# will not build with gcj:
+# Syntax error, annotations are only available if source level is 5.0
+# Syntax error, static imports are only available if source level is 5.0
+# Syntax error, parameterized types are only available if source level is 5.0
+#
+# Conditional build:
 %bcond_without  javadoc         # don't build javadoc
 
 %if "%{pld_release}" == "ti"
@@ -6,9 +13,8 @@
 %bcond_with    java_sun        # build with java-sun
 %endif
 
-%include	/usr/lib/rpm/macros.java
-
 %define		srcname		junit
+%include	/usr/lib/rpm/macros.java
 Summary:	JUnit - regression testing framework
 Summary(pl.UTF-8):	JUnit - środowisko do testów regresji
 Name:		java-junit
@@ -27,7 +33,6 @@ BuildRequires:	rpm-javaprov
 BuildRequires:	rpmbuild(macros) >= 1.300
 BuildRequires:	unzip
 Requires:	java-hamcrest
-Requires:	jdk >= 1.5
 Provides:	junit
 Obsoletes:	junit
 BuildArch:	noarch
