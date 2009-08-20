@@ -1,25 +1,11 @@
-# TODO
-# will not build with gcj:
-# Syntax error, annotations are only available if source level is 5.0
-# Syntax error, static imports are only available if source level is 5.0
-# Syntax error, parameterized types are only available if source level is 5.0
-# Syntax error, varargs are only available if source level is 5.0
-# Syntax error, annotation declarations are only available if source level is 5.0
-# Syntax error, type parameters are only available if source level is 5.0
-#
+
 # Conditional build:
-%bcond_without  javadoc         # don't build javadoc
-%bcond_with 	binary		# do not compile .jars from source use bundled ones
+%bcond_without	javadoc		# don't build javadoc
 
 %if "%{pld_release}" == "ti"
-%bcond_without java_sun        # build with gcj
+%bcond_without	java_sun	# build with gcj
 %else
-%bcond_without   java_sun        # build with java-sun
-%endif
-
-# HACK: use binary where java-sun not available
-%ifnarch i586 i686 pentium3 pentium4 athlon %{x8664}
-%define	with_binary	1
+%bcond_with	java_sun	# build with java-sun
 %endif
 
 %define		srcname		junit
@@ -28,24 +14,23 @@ Summary:	JUnit - regression testing framework
 Summary(pl.UTF-8):	JUnit - środowisko do testów regresji
 Name:		java-junit
 Version:	4.4
-Release:	3
+Release:	4
 License:	IBM Common Public License v1.0
 Group:		Libraries/Java
 Source0:	http://dl.sourceforge.net/junit/%{srcname}-%{version}-src.jar
 # Source0-md5:	4126a0974473f7cb7df7fd5cd109505d
-Source1:	http://carme.pld-linux.org/~glen/junit-%{version}.jar
-# Source1-md5:	823d46f50018f26fd4d4d7ee47fd4a6e
 URL:		http://www.junit.org/
-%if %{without binary}
 %{!?with_java_sun:BuildRequires:        java-gcj-compat-devel}
+%{!?with_java_sun:BuildRequires:        gcc-java >= 6:4.4.0}
 %{?with_java_sun:BuildRequires:	java-sun >= 1.5}
-%endif
 BuildRequires:	java-hamcrest
+BuildRequires:	java-qdox
 BuildRequires:	jpackage-utils
 BuildRequires:	rpm-javaprov
 BuildRequires:	rpmbuild(macros) >= 1.300
 BuildRequires:	unzip
 Requires:	java-hamcrest
+Requires:	java-qdox
 Provides:	junit
 Obsoletes:	junit
 BuildArch:	noarch
@@ -75,21 +60,15 @@ Dokumentacja javadoc dla pakietu JUnit.
 %setup -qc
 install -d javadoc
 rm -f junit/runner/Version.java.template
-%if %{with binary}
-cp %{SOURCE1} .
-%endif
 
 %build
-%if %{without binary}
-required_jars="hamcrest-core"
+required_jars="hamcrest-core qdox"
 CLASSPATH=$(build-classpath $required_jars)
-export CLASSPATH
 
-%javac -target 1.5 -source 1.5 $(find -name '*.java')
+%javac -cp $CLASSPATH -target 1.5 -source 1.5 $(find -name '*.java')
 %jar -cvf %{srcname}-%{version}.jar $(find -type f '!' -name '*.java')
-%endif
 
-%{?with_javadoc:%javadoc -d javadoc $(find -name '*.java')}
+%{?with_javadoc:%javadoc -classpath $CLASSPATH -d javadoc $(find -name '*.java')}
 
 %install
 rm -rf $RPM_BUILD_ROOT
