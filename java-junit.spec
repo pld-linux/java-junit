@@ -13,12 +13,12 @@
 Summary:	JUnit - regression testing framework
 Summary(pl.UTF-8):	JUnit - środowisko do testów regresji
 Name:		java-junit
-Version:	4.4
-Release:	4
+Version:	4.8
+Release:	1
 License:	IBM Common Public License v1.0
 Group:		Libraries/Java
 Source0:	http://dl.sourceforge.net/junit/%{srcname}-%{version}-src.jar
-# Source0-md5:	4126a0974473f7cb7df7fd5cd109505d
+# Source0-md5:	5e1f1c4551bcd8399a1c3aeae123f575
 URL:		http://www.junit.org/
 %{!?with_java_sun:BuildRequires:        java-gcj-compat-devel}
 %{!?with_java_sun:BuildRequires:        gcc-java >= 6:4.4.0}
