@@ -2,12 +2,6 @@
 # Conditional build:
 %bcond_without	javadoc		# don't build javadoc
 
-%if "%{pld_release}" == "ti"
-%bcond_without	java_sun	# build with gcj
-%else
-%bcond_with	java_sun	# build with java-sun
-%endif
-
 %define		srcname		junit
 %include	/usr/lib/rpm/macros.java
 Summary:	JUnit - regression testing framework
@@ -17,14 +11,13 @@ Version:	4.8
 Release:	1
 License:	IBM Common Public License v1.0
 Group:		Libraries/Java
-Source0:	http://dl.sourceforge.net/junit/%{srcname}-%{version}-src.jar
+Source0:	http://downloads.sourceforge.net/junit/%{srcname}-%{version}-src.jar
 # Source0-md5:	5e1f1c4551bcd8399a1c3aeae123f575
 URL:		http://www.junit.org/
-%{!?with_java_sun:BuildRequires:        java-gcj-compat-devel}
-%{!?with_java_sun:BuildRequires:        gcc-java >= 6:4.4.0}
-%{?with_java_sun:BuildRequires:	java-sun >= 1.5}
 BuildRequires:	java-hamcrest
 BuildRequires:	java-qdox
+BuildRequires:	java-sun
+BuildRequires:	jdk >= 1.5
 BuildRequires:	jpackage-utils
 BuildRequires:	rpm-javaprov
 BuildRequires:	rpmbuild(macros) >= 1.300
