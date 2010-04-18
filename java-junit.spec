@@ -16,7 +16,6 @@ Source0:	http://downloads.sourceforge.net/junit/%{srcname}-%{version}-src.jar
 URL:		http://www.junit.org/
 BuildRequires:	java-hamcrest
 BuildRequires:	java-qdox
-BuildRequires:	java-sun
 BuildRequires:	jdk >= 1.5
 BuildRequires:	jpackage-utils
 BuildRequires:	rpm-javaprov
