@@ -23,7 +23,6 @@ BuildRequires:	rpmbuild(macros) >= 1.300
 BuildRequires:	unzip
 Requires:	java-hamcrest
 Requires:	java-qdox
-Provides:	junit
 Obsoletes:	junit
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
