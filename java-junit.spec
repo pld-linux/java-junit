@@ -7,21 +7,21 @@
 Summary:	JUnit - regression testing framework
 Summary(pl.UTF-8):	JUnit - środowisko do testów regresji
 Name:		java-junit
-Version:	4.8
-Release:	2
+Version:	4.8.2
+Release:	1
 License:	IBM Common Public License v1.0
 Group:		Libraries/Java
-Source0:	http://downloads.sourceforge.net/junit/%{srcname}-%{version}-src.jar
-# Source0-md5:	5e1f1c4551bcd8399a1c3aeae123f575
+Source0:	http://github.com/downloads/KentBeck/junit/junit-%{version}-src.jar
+# Source0-md5:	2100c46cd257afedd4f2989ba3ab5bce
 URL:		http://www.junit.org/
-BuildRequires:	java-hamcrest
+BuildRequires:	java-hamcrest11
 BuildRequires:	java-qdox
 BuildRequires:	jdk >= 1.5
 BuildRequires:	jpackage-utils
 BuildRequires:	rpm-javaprov
 BuildRequires:	rpmbuild(macros) >= 1.300
 BuildRequires:	unzip
-Requires:	java-hamcrest
+Requires:	java-hamcrest11
 Requires:	java-qdox
 Obsoletes:	junit
 BuildArch:	noarch
@@ -47,13 +47,25 @@ JUnit API documentation.
 %description javadoc -l pl.UTF-8
 Dokumentacja javadoc dla pakietu JUnit.
 
+%package source
+Summary:	Source code of %{srcname}
+Summary(pl.UTF-8):	Kod źródłowy %{srcname}
+Group:		Documentation
+Requires:	jpackage-utils >= 1.7.5-2
+
+%description source
+Source code of %{srcname}.
+
+%description source -l pl.UTF-8
+Kod źródłowy %{srcname}.
+
 %prep
 %setup -qc
 install -d javadoc
 rm -f junit/runner/Version.java.template
 
 %build
-required_jars="hamcrest-core qdox"
+required_jars="hamcrest11-core qdox"
 CLASSPATH=$(build-classpath $required_jars)
 
 %javac -cp $CLASSPATH -target 1.5 -source 1.5 $(find -name '*.java')
@@ -74,6 +86,10 @@ cp -pr javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{srcname}-%{version}
 ln -s %{srcname}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{srcname} # ghost symlink
 %endif
 
+# source
+install -d $RPM_BUILD_ROOT%{_javasrcdir}
+install %{SOURCE0} $RPM_BUILD_ROOT%{_javasrcdir}/%{srcname}.src.jar
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -90,3 +106,7 @@ ln -nfs %{srcname}-%{version} %{_javadocdir}/%{srcname}
 %{_javadocdir}/%{srcname}-%{version}
 %ghost %{_javadocdir}/%{srcname}
 %endif
+
+%files source
+%defattr(644,root,root,755)
+%{_javasrcdir}/%{srcname}.src.jar
