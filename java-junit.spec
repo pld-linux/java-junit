@@ -1,4 +1,4 @@
-
+#
 # Conditional build:
 %bcond_without	javadoc		# don't build javadoc
 
@@ -48,16 +48,16 @@ JUnit API documentation.
 Dokumentacja javadoc dla pakietu JUnit.
 
 %package source
-Summary:	Source code of %{srcname}
-Summary(pl.UTF-8):	Kod źródłowy %{srcname}
+Summary:	Source code of JUnit
+Summary(pl.UTF-8):	Kod źródłowy JUnita
 Group:		Documentation
 Requires:	jpackage-utils >= 1.7.5-2
 
 %description source
-Source code of %{srcname}.
+Source code of JUnit.
 
 %description source -l pl.UTF-8
-Kod źródłowy %{srcname}.
+Kod źródłowy JUnita.
 
 %prep
 %setup -qc
@@ -98,7 +98,8 @@ ln -nfs %{srcname}-%{version} %{_javadocdir}/%{srcname}
 
 %files
 %defattr(644,root,root,755)
-%{_javadir}/*.jar
+%{_javadir}/junit-%{version}.jar
+%{_javadir}/junit.jar
 
 %if %{with javadoc}
 %files javadoc
