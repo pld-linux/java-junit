@@ -7,12 +7,12 @@
 Summary:	JUnit - regression testing framework
 Summary(pl.UTF-8):	JUnit - środowisko do testów regresji
 Name:		java-junit
-Version:	4.10
+Version:	4.11
 Release:	1
 License:	IBM Common Public License v1.0
 Group:		Libraries/Java
-Source0:	http://github.com/downloads/KentBeck/junit/junit-%{version}-src.jar
-# Source0-md5:	46c3d6999c79e808c87ad7df5a77608c
+Source0:	https://github.com/junit-team/junit/archive/r%{version}.tar.gz
+# Source0-md5:	bf62095e510f50baf0962af329438647
 URL:		http://www.junit.org/
 BuildRequires:	java-hamcrest11
 BuildRequires:	java-qdox
@@ -60,7 +60,7 @@ Source code of JUnit.
 Kod źródłowy JUnita.
 
 %prep
-%setup -qc
+%setup -q -n junit-r%{version}
 install -d javadoc
 rm -f junit/runner/Version.java.template
 
@@ -68,27 +68,25 @@ rm -f junit/runner/Version.java.template
 required_jars="hamcrest11-core qdox"
 CLASSPATH=$(build-classpath $required_jars)
 
-%javac -cp $CLASSPATH -target 1.5 -source 1.5 $(find -name '*.java')
-%jar -cvf %{srcname}-%{version}.jar $(find -type f '!' -name '*.java')
-
-%{?with_javadoc:%javadoc -classpath $CLASSPATH -d javadoc $(find -name '*.java')}
+%ant dist \
+	-Dversion-status=
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_javadir}
-install junit-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/junit-%{version}.jar
+install junit%{version}/junit-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/junit-%{version}.jar
 ln -sf junit-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/junit.jar
 
 # javadoc
 %if %{with javadoc}
 install -d $RPM_BUILD_ROOT%{_javadocdir}/%{srcname}-%{version}
-cp -pr javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{srcname}-%{version}
+cp -pr junit%{version}/javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{srcname}-%{version}
 ln -s %{srcname}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{srcname} # ghost symlink
 %endif
 
 # source
 install -d $RPM_BUILD_ROOT%{_javasrcdir}
-install %{SOURCE0} $RPM_BUILD_ROOT%{_javasrcdir}/%{srcname}.src.jar
+install junit%{version}/junit-%{version}-src.jar $RPM_BUILD_ROOT%{_javasrcdir}/%{srcname}.src.jar
 
 %clean
 rm -rf $RPM_BUILD_ROOT
