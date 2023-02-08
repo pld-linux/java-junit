@@ -1,6 +1,7 @@
 #
 # Conditional build:
-%bcond_without	javadoc		# don't build javadoc
+%bcond_without	javadoc	# Javadoc documentation
+%bcond_without	tests	# unit tests
 
 %define		srcname		junit
 Summary:	JUnit - regression testing framework
@@ -10,9 +11,12 @@ Version:	4.11
 Release:	1
 License:	IBM Common Public License v1.0
 Group:		Libraries/Java
-Source0:	https://github.com/junit-team/junit/archive/r%{version}.tar.gz
+# TODO:
+#Source0:	https://github.com/junit-team/junit4/archive/r%{version}/junit4-r%{version}.tar.gz
+#Source0Download: https://github.com/junit-team/junit4/releases
+Source0:	https://github.com/junit-team/junit4/r%{version}.tar.gz
 # Source0-md5:	bf62095e510f50baf0962af329438647
-URL:		http://www.junit.org/
+URL:		https://junit.org/
 BuildRequires:	java-hamcrest11
 BuildRequires:	java-qdox
 BuildRequires:	jdk >= 1.5
@@ -22,7 +26,7 @@ BuildRequires:	rpmbuild(macros) >= 1.300
 BuildRequires:	unzip
 Requires:	java-hamcrest11
 Requires:	java-qdox
-Obsoletes:	junit
+Obsoletes:	junit < 4.5
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -37,8 +41,8 @@ Summary:	Javadoc documentation for JUnit
 Summary(pl.UTF-8):	Dokumentacja javadoc dla pakietu JUnit
 Group:		Documentation
 Requires:	jpackage-utils
-Obsoletes:	junit-doc
-Obsoletes:	junit-javadoc
+Obsoletes:	junit-doc < 4.5
+Obsoletes:	junit-javadoc < 4.5
 
 %description javadoc
 JUnit API documentation.
@@ -60,20 +64,21 @@ Kod źródłowy JUnita.
 
 %prep
 %setup -q -n junit-r%{version}
+
 install -d javadoc
-rm -f junit/runner/Version.java.template
 
 %build
 required_jars="hamcrest11-core qdox"
 CLASSPATH=$(build-classpath $required_jars)
 
-%ant dist \
+%ant %{!?with_tests:populate-}dist \
 	-Dversion-status=
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_javadir}
-install junit%{version}/junit-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/junit-%{version}.jar
+
+cp -p junit%{version}/junit-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/junit-%{version}.jar
 ln -sf junit-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/junit.jar
 
 # javadoc
